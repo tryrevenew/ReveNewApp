@@ -1,0 +1,38 @@
+{
+  "images" : [
+    {
+      "filename" : "20250525_1902_Fix Bottom Design_remix_01jw469yh7e5yvkm8d8tm3ncrd.png",
+      "idiom" : "universal",
+      "platform" : "ios",
+      "size" : "1024x1024"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "20250525_1905_Dark Green Design_remix_01jw46fk93fg29jyv66dfrqpam.png",
+      "idiom" : "universal",
+      "platform" : "ios",
+      "size" : "1024x1024"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "tinted"
+        }
+      ],
+      "filename" : "20250525_1905_Dark Green Design_remix_01jw46fk94er58fspnrg8n17y0.png",
+      "idiom" : "universal",
+      "platform" : "ios",
+      "size" : "1024x1024"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
