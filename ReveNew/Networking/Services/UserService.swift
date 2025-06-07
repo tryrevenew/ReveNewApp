@@ -60,7 +60,7 @@ struct UserService: HTTPClient {
     }
     
     // MARK: - Get Purchases
-    func getPurchases(appName: String, page: Int, startDate: Date? = nil, endDate: Date? = nil, includeSandbox: Bool = true) async throws -> PurchasesReponse {
+    func getPurchases(appName: String, page: Int, startDate: Date? = nil, endDate: Date? = nil, includeSandbox: Bool = true, includeTrials: Bool = true, trialStatus: TrialStatus = .all) async throws -> PurchasesReponse {
         let customJsonDecoder = JSONDecoder()
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
@@ -78,7 +78,7 @@ struct UserService: HTTPClient {
             }
         }
         
-        return try await request(endpoint: UserEndpoint.getPurchases(appName: appName, page: page, startDate: startDate, endDate: endDate, includeSandbox: includeSandbox), responseModel: PurchasesReponse.self, decoder: customJsonDecoder)
+        return try await request(endpoint: UserEndpoint.getPurchases(appName: appName, page: page, startDate: startDate, endDate: endDate, includeSandbox: includeSandbox, includeTrials: includeTrials, trialStatus: trialStatus), responseModel: PurchasesReponse.self, decoder: customJsonDecoder)
     }
     
     func getSummary(appName: String, startDate: Date? = nil, endDate: Date? = nil, groupBy: FilterGroup? = nil, includeSandbox: Bool = true) async throws -> PurchaseSummaryResponse {

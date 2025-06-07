@@ -14,6 +14,8 @@ struct FilterView: View {
     @Binding var downloadGroupBy: DownloadGrouping
     @Binding var showTestPurchase: Bool
     @Binding var selectedTab: Int
+    @Binding var includeTrials: Bool
+    @Binding var trialStatus: TrialStatus
     
     @State var startDate: Date = Date()
     @State var endDate: Date = Date()
@@ -119,7 +121,7 @@ struct FilterView: View {
             if selectedTab == 0 {
                 Divider()
                 
-                Text("Extras:")
+                Text("Purchase Options:")
                     .font(.system(size: 20, weight: .semibold))
                 
                 HStack {
@@ -129,6 +131,43 @@ struct FilterView: View {
                     
                     Toggle(isOn: $showTestPurchase) {}
                 }
+                
+                HStack {
+                    Text("Include Trials:")
+                    
+                    Spacer()
+                    
+                    Toggle(isOn: $includeTrials) {}
+                }
+                
+                HStack {
+                    Text("Trial Status:")
+                    
+                    Spacer()
+                    
+                    Menu {
+                        ForEach(TrialStatus.allCases, id: \.rawValue) { status in
+                            Button {
+                                trialStatus = status
+                            } label: {
+                                HStack {
+                                    Text(status == .all ? "All" : (status == .trialsOnly ? "Trials Only" : "Paid Only"))
+                                    Spacer()
+                                    if status == trialStatus {
+                                        Image(systemName: "checkmark")
+                                    }
+                                }
+                            }
+                        }
+                    } label: {
+                        Text(trialStatus == .all ? "All" : (trialStatus == .trialsOnly ? "Trials Only" : "Paid Only"))
+                            .foregroundStyle(Color.primary)
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 5)
+                            .background(Color.init(uiColor: .systemGray5))
+                            .clipShape(RoundedRectangle(cornerRadius: 6))
+                    }
+                }
             }
             
             Spacer()
@@ -137,6 +176,6 @@ struct FilterView: View {
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
         .presentationDragIndicator(.visible)
-        .presentationDetents([.height(selectedTab == 0 ? 450 : 350)])
+        .presentationDetents([.height(selectedTab == 0 ? 550 : 350)])
     }
 }

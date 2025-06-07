@@ -16,4 +16,6 @@ struct PurchaseSummary: Codable, Hashable {
     let group: Date
     let totalInUSD: Double
     let count: Int
+    let trialCount: Int
+    let paidCount: Int
 }

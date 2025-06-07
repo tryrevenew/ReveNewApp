@@ -14,11 +14,18 @@ enum FilterGroup: String, CaseIterable {
     case month
 }
 
+// Trial status filter options
+enum TrialStatus: String, CaseIterable {
+    case all = "all"
+    case trialsOnly = "trials-only"
+    case paidOnly = "paid-only"
+}
+
 enum UserEndpoint {
     case createUser
     case updatePushToken
     case appList
-    case getPurchases(appName: String, page: Int, startDate: Date? = nil, endDate: Date? = nil, includeSandbox: Bool = true)
+    case getPurchases(appName: String, page: Int, startDate: Date? = nil, endDate: Date? = nil, includeSandbox: Bool = true, includeTrials: Bool = true, trialStatus: TrialStatus = .all)
     case getSummary(appName: String, startDate: Date?, endDate: Date?, groupBy: FilterGroup?, includeSandbox: Bool = true)
     case getDownloads(appName: String?, startDate: Date? = nil, endDate: Date? = nil, groupBy: DownloadGrouping = .day, includeDetails: Bool = false)
 }
@@ -32,13 +39,19 @@ extension UserEndpoint: Endpoint {
         switch self {
         case .createUser, .updatePushToken, .appList:
             return nil
-        case .getPurchases(let appName, let page, let startDate, let endDate, let includeSandbox):
+        case .getPurchases(let appName, let page, let startDate, let endDate, let includeSandbox, let includeTrials, let trialStatus):
             var defaultQueries = [
                 URLQueryItem(name: "appName", value: appName),
                 URLQueryItem(name: "page", value: "\(page)"),
                 URLQueryItem(name: "limit", value: "10"),
-                URLQueryItem(name: "includeSandbox", value: includeSandbox ? "true" : "false")
+                URLQueryItem(name: "includeSandbox", value: includeSandbox ? "true" : "false"),
+                URLQueryItem(name: "includeTrials", value: includeTrials ? "true" : "false")
             ]
+            
+            // Only add trialStatus if it's not .all (default)
+            if trialStatus != .all {
+                defaultQueries.append(URLQueryItem(name: "trialStatus", value: trialStatus.rawValue))
+            }
             
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd"

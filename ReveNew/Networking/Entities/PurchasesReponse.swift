@@ -11,6 +11,13 @@ struct PurchasesReponse: Codable {
     let success: Bool
     let purchases: [Purchase]?
     let totalInUSD: String?
+    let stats: PurchaseStats?
+}
+
+struct PurchaseStats: Codable, Hashable {
+    let total: Int
+    let trials: Int
+    let paid: Int
 }
 
 struct Purchase: Codable, Hashable {
@@ -23,4 +30,6 @@ struct Purchase: Codable, Hashable {
     let appName: String
     let createdAt: Date
     let storeFront: String?
+    let isTrial: Bool?
+    let trialPeriod: String?
 }

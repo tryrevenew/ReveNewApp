@@ -20,7 +20,7 @@ struct ReveNewApp: App {
     
     init() {
         // Configure your network settings
-        // NetworkConfiguration.shared.configure(host: "api.revenew.com", port: 2025)
+        // NetworkConfiguration.shared.configure(host: "", port: 2025)
     }
     
     var body: some Scene {

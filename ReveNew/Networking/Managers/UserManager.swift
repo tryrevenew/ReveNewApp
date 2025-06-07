@@ -48,12 +48,12 @@ final class UserManager: ObservableObject {
     }
     
     /// Get Purchases
-    func getPurchases(appName: String, page: Int, startDate: Date? = nil, endDate: Date? = nil, includeSandbox: Bool = true) async throws {
+    func getPurchases(appName: String, page: Int, startDate: Date? = nil, endDate: Date? = nil, includeSandbox: Bool = true, includeTrials: Bool = true, trialStatus: TrialStatus = .all) async throws {
         if page == 1 {
             purchases.removeAll()
         }
         
-        let purchasesResponse = try await service.getPurchases(appName: appName, page: page, startDate: startDate, endDate: endDate, includeSandbox: includeSandbox)
+        let purchasesResponse = try await service.getPurchases(appName: appName, page: page, startDate: startDate, endDate: endDate, includeSandbox: includeSandbox, includeTrials: includeTrials, trialStatus: trialStatus)
         
         self.purchaseResponse = purchasesResponse
         
